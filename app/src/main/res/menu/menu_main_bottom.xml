@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/home"
+        android:enabled="true"
+        android:title="@string/home"
+        android:icon="@drawable/live_ico" />
+
+    <item android:id="@+id/live"
+        android:enabled="true"
+        android:title="@string/live"
+        android:icon="@drawable/streaming_ico" />
+
+    <item android:id="@+id/profile"
+        android:enabled="true"
+        android:title="@string/profile"
+        android:icon="@drawable/profile_ico"/>
+
+</menu>

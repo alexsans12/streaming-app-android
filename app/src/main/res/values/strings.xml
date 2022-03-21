@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Streaming App</string>
+    <string name="developer">Desarrollado por Analysis Group</string>
+
+    <!--  Login  -->
+    <string name="loginTitle">Vamos a iniciar sesión</string>
+    <string name="loginSubtitle">Bienvenido de nuevo</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="loginAccount">No tienes una cuenta?</string>
+    <string name="loginRegister">Registrate</string>
+
+    <!--  Register Activity  -->
+    <string name="registerTitle">Unete a nuestra plataforma</string>
+    <string name="registerSubtitle">Crea tu cuenta gratis</string>
+    <string name="username">Nombre de Usuario</string>
+    <string name="firstName">Nombre</string>
+    <string name="lastName">Apellidos</string>
+    <string name="birthday">Fecha de Nacimiento</string>
+    <string name="createAccount">Crear Cuenta</string>
+    <string name="required">*Obligatorio</string>
+
+    <!--  Main Activity  -->
+    <string name="mainTitle">Descubre!</string>
+
+    <!--  menu main bottom  -->
+    <string name="home">Lives</string>
+    <string name="live">Transmitir</string>
+    <string name="profile">Perfil</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--  Exoplayer -->
+    <string name="rewindDescription">Rewind button</string>
+    <string name="playDescription">Play button</string>
+    <string name="pauseDescription">Pause button</string>
+    <string name="forwardDescription">Forward button</string>
+    <string name="fullscreenDescription">Fullscreen button</string>
+
+    <string name="player_position"> -- </string>
+    <string name="player_slash">/</string>
+    <string name="player_duration">00:00</string>
+
+    <string name="storage_permission_denied">Permission to access storage was denied</string>
+
+</resources>

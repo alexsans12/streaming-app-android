@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "922311389000",
+    "firebase_url": "https://appstreaming-f76e1-default-rtdb.firebaseio.com",
+    "project_id": "appstreaming-f76e1",
+    "storage_bucket": "appstreaming-f76e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922311389000:android:f35cbb6590e96d10c28d7d",
+        "android_client_info": {
+          "package_name": "com.analysisgroup.streamingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922311389000-tkhdu1re2bt1bl8vp5pnfi6g5ta1uf30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGzTVW_HyKC18DBcpMz5XFxGcQHUbaLYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922311389000-tkhdu1re2bt1bl8vp5pnfi6g5ta1uf30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
