@@ -1,10 +1,7 @@
 package com.analysisgroup.streamingapp;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,12 +9,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.analysisgroup.streamingapp.LiveVideoBroadcaster.LiveVideoBroadcasterActivity;
 import com.analysisgroup.streamingapp.MainFragments.HomeFragment;
 import com.analysisgroup.streamingapp.MainFragments.LiveFragment;
 import com.analysisgroup.streamingapp.MainFragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -76,8 +73,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                         .replace(R.id.fragment_container_main, new HomeFragment()).commit();
                 break;
             case R.id.live:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_main, new LiveFragment()).commit();
+                startActivity(new Intent(MainActivity.this, LiveVideoBroadcasterActivity.class));
+                /*getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_main, new LiveFragment()).commit();*/
                 break;
             case R.id.profile:
                 getSupportFragmentManager().beginTransaction()
