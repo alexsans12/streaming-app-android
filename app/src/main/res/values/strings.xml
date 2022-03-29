@@ -51,6 +51,7 @@
     <string name="error_querying_decoders">Unable to query device decoders</string><string name="error_instantiating_decoder">Unable to instantiate decoder <xliff:g id="decoder_name">%1$s</xliff:g></string>
     <string name="error_unsupported_video">Media includes video tracks, but none are playable by this device</string>
     <string name="error_unsupported_audio">Media includes audio tracks, but none are playable by this device</string>
+    <string name="error_generic">Playback failed</string>
 
     <!--  LiveVideoBroadcaster  -->
     <string name="settingsButton">Settings Button</string>

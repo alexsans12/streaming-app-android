@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
-    public static final String RTMP_BASE_URL = "rtmp://192.168.0.12/LiveApp/220196556655907838177846";
+    public static final String RTMP_BASE_URL = "http://192.168.0.12:5080/LiveApp/streams/248217670203536868613365.m3u8?format=2&adsId=1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
