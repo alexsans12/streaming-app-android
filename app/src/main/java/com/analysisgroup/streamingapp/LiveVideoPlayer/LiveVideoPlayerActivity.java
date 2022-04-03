@@ -1,26 +1,21 @@
 package com.analysisgroup.streamingapp.LiveVideoPlayer;
 
+import static com.analysisgroup.streamingapp.MainActivity.HLS_BASE_URL;
 import static com.analysisgroup.streamingapp.MainActivity.RTMP_BASE_URL;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Pair;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.analysisgroup.streamingapp.R;
 import com.google.android.exoplayer2.C;
@@ -28,38 +23,27 @@ import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.PlaybackException;
 import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.RenderersFactory;
-import com.google.android.exoplayer2.TracksInfo;
 import com.google.android.exoplayer2.audio.AudioAttributes;
-import com.google.android.exoplayer2.drm.FrameworkMediaDrm;
 import com.google.android.exoplayer2.ext.ima.ImaAdsLoader;
 import com.google.android.exoplayer2.ext.ima.ImaServerSideAdInsertionMediaSource;
 import com.google.android.exoplayer2.mediacodec.MediaCodecRenderer;
 import com.google.android.exoplayer2.mediacodec.MediaCodecUtil;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.ads.AdsLoader;
-import com.google.android.exoplayer2.source.hls.HlsMediaSource;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.ui.StyledPlayerControlView;
 import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSource;
 import com.google.android.exoplayer2.util.DebugTextViewHelper;
 import com.google.android.exoplayer2.util.ErrorMessageProvider;
-import com.google.android.exoplayer2.util.EventLogger;
+import com.google.android.exoplayer2.util.MimeTypes;
 import com.google.android.exoplayer2.util.Util;
 
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
-import java.util.Collections;
-import java.util.List;
-
 public class LiveVideoPlayerActivity extends AppCompatActivity implements StyledPlayerControlView.VisibilityListener {
 
     // Saved instance state keys.
-    private static final String KEY_TRACK_SELECTION_PARAMETERS = "track_selection_parameters";
     private static final String KEY_SERVER_SIDE_ADS_LOADER_STATE = "server_side_ads_loader_state";
     private static final String KEY_ITEM_INDEX = "item_index";
     private static final String KEY_POSITION = "position";
@@ -74,13 +58,11 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
     private DebugTextViewHelper debugViewHelper;
     private DataSource.Factory dataSourceFactory;
     protected MediaSource mediaSource;
-    protected Uri uri = Uri.parse(RTMP_BASE_URL);
+    protected Uri uri = Uri.parse(HLS_BASE_URL);
 
     // For ad playback only.
     @Nullable
-    private AdsLoader clientSideAdsLoader;
-    @Nullable
-    private ImaServerSideAdInsertionMediaSource.AdsLoader serverSideAdsLoader;
+    private ImaAdsLoader clientSideAdsLoader;
     private ImaServerSideAdInsertionMediaSource.AdsLoader.@MonotonicNonNull State
             serverSideAdsLoaderState;
 
@@ -91,8 +73,6 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //dataSourceFactory = DemoUtil.getDataSourceFactory(/* context= */ this);
 
         setContentView(R.layout.activity_live_video_player);
 
@@ -126,30 +106,18 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
         styledPlayerView.requestFocus();
     }
 
-    public void initPlayer() {
-        player = new ExoPlayer.Builder(this).build();
-        player.addListener(listener);
-
-        styledPlayerView.setPlayer(player);
-        createMediaSource();
-        player.setMediaItem(MediaItem.fromUri("ssai://dai.google.com/?format=2&adsId=1"));
-        player.setMediaSource(mediaSource);
-        player.prepare();
-    }
-
     protected boolean initializePlayer() {
         if (player == null) {
-            Intent intent = getIntent();
-
-            player =
-                    new ExoPlayer.Builder(/* context= */ this)
+            player = new ExoPlayer.Builder(/* context= */ this)
                             .setMediaSourceFactory(createMediaSourceFactory())
                             .build();
             player.addListener(listener);
             player.setAudioAttributes(AudioAttributes.DEFAULT, /* handleAudioFocus= */ true);
             player.setPlayWhenReady(startAutoPlay);
             styledPlayerView.setPlayer(player);
-            serverSideAdsLoader.setPlayer(player);
+
+            clientSideAdsLoader = new ImaAdsLoader.Builder(/* context= */ this).build();
+            clientSideAdsLoader.setPlayer(player);
 
             debugViewHelper = new DebugTextViewHelper(player, debugTextView);
             debugViewHelper.start();
@@ -169,29 +137,14 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
     }
 
     private MediaSource.Factory createMediaSourceFactory() {
-        ImaServerSideAdInsertionMediaSource.AdsLoader.Builder serverSideAdLoaderBuilder =
-                new ImaServerSideAdInsertionMediaSource.AdsLoader.Builder(/* context= */ this, styledPlayerView);
-        if (serverSideAdsLoaderState != null) {
-            serverSideAdLoaderBuilder.setAdsLoaderState(serverSideAdsLoaderState);
-        }
-        serverSideAdsLoader = serverSideAdLoaderBuilder.build();
-        ImaServerSideAdInsertionMediaSource.Factory imaServerSideAdInsertionMediaSourceFactory =
-                new ImaServerSideAdInsertionMediaSource.Factory(
-                        serverSideAdsLoader, new DefaultMediaSourceFactory(dataSourceFactory));
-        return new DefaultMediaSourceFactory(dataSourceFactory)
-                .setLiveTargetOffsetMs(5000)
-                .setAdsLoaderProvider(this::getClientSideAdsLoader)
-                .setAdViewProvider(styledPlayerView)
-                .setServerSideAdInsertionMediaSourceFactory(imaServerSideAdInsertionMediaSourceFactory);
-    }
+        DataSource.Factory dataSourceFactory = new DefaultDataSource.Factory(this);
 
-    private AdsLoader getClientSideAdsLoader(MediaItem.AdsConfiguration adsConfiguration) {
-        // The ads loader is reused for multiple playbacks, so that ad playback can resume.
-        if (clientSideAdsLoader == null) {
-            clientSideAdsLoader = new ImaAdsLoader.Builder(/* context= */ this).build();
-        }
-        clientSideAdsLoader.setPlayer(player);
-        return clientSideAdsLoader;
+        MediaSource.Factory mediaSourceFactory =
+                new DefaultMediaSourceFactory(dataSourceFactory)
+                        .setAdsLoaderProvider(unusedAdTagUri -> clientSideAdsLoader)
+                        .setAdViewProvider(styledPlayerView);
+
+        return mediaSourceFactory;
     }
 
     private void createMediaSource() {
@@ -202,16 +155,27 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
 
         DataSource.Factory dataSourceFactory = new DefaultDataSource.Factory(this, () -> dataSource);
 
+        Uri adUri = Uri.parse("https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_preroll_skippable&sz=640x480&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator=");
+
+        MediaItem.AdsConfiguration adsConfiguration = new MediaItem.AdsConfiguration.Builder(adUri).build();
+
         MediaItem mediaItem =
                 new MediaItem.Builder()
                         .setUri(uri)
+                        .setAdsConfiguration(adsConfiguration)
+                        .setMimeType(MimeTypes.APPLICATION_M3U8)
                         .setLiveConfiguration(
                                 new MediaItem.LiveConfiguration.Builder()
-                                        .setMaxPlaybackSpeed(1.02f)
+                                        .setMaxPlaybackSpeed(1.0f)
                                         .build())
                         .build();
 
-        mediaSource = new HlsMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem);
+        MediaSource.Factory mediaSourceFactory =
+                new DefaultMediaSourceFactory(dataSourceFactory)
+                        .setAdsLoaderProvider(unusedAdTagUri -> clientSideAdsLoader)
+                        .setAdViewProvider(styledPlayerView);
+
+        mediaSource = mediaSourceFactory.createMediaSource(mediaItem);
     }
 
     @Override
@@ -244,9 +208,6 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
                 styledPlayerView.onResume();
             }
         }
-
-        //player.setPlayWhenReady(true);
-        //player.play();
     }
 
     @Override
@@ -274,9 +235,6 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
             }
             releasePlayer();
         }
-
-        //player.pause();
-        //player.setPlayWhenReady(false);
     }
 
     @Override
@@ -343,8 +301,6 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
         if (player != null) {
             updateTrackSelectorParameters();
             updateStartPosition();
-            serverSideAdsLoaderState = serverSideAdsLoader.release();
-            serverSideAdsLoader = null;
             debugViewHelper.stop();
             debugViewHelper = null;
             player.release();

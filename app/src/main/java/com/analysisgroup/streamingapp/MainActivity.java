@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
-    public static final String RTMP_BASE_URL = "http://192.168.0.12:5080/LiveApp/streams/248217670203536868613365.m3u8?format=2&adsId=1";
+    public static final String RTMP_BASE_URL = "rtmp://192.168.0.12/LiveApp/248217670203536868613365";
+    public static final String HLS_BASE_URL = "http://192.168.0.12:5080/LiveApp/streams/248217670203536868613365.m3u8?token=undefined&subscriberId=undefined&subscriberCode=undefined";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +57,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             finish();
             Toast.makeText(this, "Necesitas iniciar sesion", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void logout() {
-        firebaseAuth.signOut();
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show();
     }
 
     @SuppressLint("NonConstantResourceId")

@@ -12,6 +12,8 @@ import android.widget.Button;
 
 import com.analysisgroup.streamingapp.LiveVideoPlayer.LiveVideoPlayerActivity;
 import com.analysisgroup.streamingapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeFragment extends Fragment {
 
