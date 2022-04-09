@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -85,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Date date = new Date();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("d'/'M'/'yyyy");
-        String sDate = dateFormat.format(date);
+        String sDate = "dd/mm/yyyy";
 
         Birthday.setText(sDate);
 
@@ -100,7 +101,19 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = Email.getText().toString();
                 String password = Password.getText().toString();
 
-                if(email.equals("") || password.equals("") || birthday.equals("") || lastName.equals("") || firstName.equals("") || username.equals("")) {
+                boolean isDate = false;
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/mm/yyyy");
+                simpleDateFormat.setLenient(false);
+
+                try {
+                    simpleDateFormat.parse(birthday);
+                    isDate = true;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if(email.equals("") || password.equals("") || !isDate || lastName.equals("") || firstName.equals("") || username.equals("")) {
                     Toast.makeText(RegisterActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
                 } else {
                     //Validation
