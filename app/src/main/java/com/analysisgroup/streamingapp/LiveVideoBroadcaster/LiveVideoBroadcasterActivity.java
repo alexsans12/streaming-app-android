@@ -304,7 +304,7 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
                                 triggerStopRecording();
                             }
                         }
-                    }.execute(RTMP_BASE_URL + streamName);
+                    }.execute(RTMP_BASE_URL /*+ streamName*/);
                 }
                 else {
                     Snackbar.make(mRootView, R.string.streaming_not_finished, Snackbar.LENGTH_LONG).show();

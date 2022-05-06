@@ -1,12 +1,13 @@
 package com.analysisgroup.streamingapp.LiveVideoPlayer;
 
 import static com.analysisgroup.streamingapp.MainActivity.HLS_BASE_URL;
-import static com.analysisgroup.streamingapp.MainActivity.RTMP_BASE_URL;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.WindowManager;
@@ -278,14 +279,12 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
         @Override
         public void onRenderedFirstFrame() {
             Player.Listener.super.onRenderedFirstFrame();
-
-            //styledPlayerView.setUseController(false);
+            styledPlayerView.setUseController(false);
         }
 
         @Override
         public void onPlayerError(PlaybackException error) {
             Player.Listener.super.onPlayerError(error);
-
             Toast.makeText(LiveVideoPlayerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };

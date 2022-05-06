@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.StreamingApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.StreamingApp" parent="Theme.Material3.Light">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -14,5 +14,13 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.StreamingApp.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
+    <style name="Theme.StreamingApp.NoActionBar" parent="Theme.Material3.Light.NoActionBar"/>
+
+    <style name="ThemeOverlay.App.DatePicker" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <item name="materialCalendarHeaderToggleButton">@style/Widget.StreamingApp.MaterialCalendar.HeaderToggleButton</item>
+    </style>
+
+    <style name="Widget.StreamingApp.MaterialCalendar.HeaderToggleButton" parent="Widget.Material3.MaterialCalendar.HeaderToggleButton">
+        <item name="android:visibility">gone</item>
+    </style>
 </resources>
