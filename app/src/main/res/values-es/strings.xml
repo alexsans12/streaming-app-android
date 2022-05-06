@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Streaming App</string>
+    <string name="developer">Desarrollado por Analysis Group</string>
+    <string name="welcome">Bienvenido </string>
+
+    <!--  Login  -->
+    <string name="loginTitle">Vamos a iniciar sesión</string>
+    <string name="loginSubtitle">Bienvenido de nuevo</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="loginAccount">¿No tienes una cuenta?</string>
+    <string name="loginRegister">Registrate</string>
+    <string name="loginMessage">Iniciando sesión, por favor espere…</string>
+    <string name="loginSuccess">Se inició sesión con éxito</string>
+    <string name="loginMessageError">Comprueba si el correo electrónico o la contraseña son correctos</string>
+
+    <!--  Register Activity  -->
+    <string name="registerBarTitle">Crear una cuenta</string>
+    <string name="registerTitle">Unete a nuestra plataforma</string>
+    <string name="registerSubtitle">Crea tu cuenta gratis</string>
+    <string name="username">Nombre de Usuario</string>
+    <string name="firstName">Nombre</string>
+    <string name="lastName">Apellidos</string>
+    <string name="birthday">Fecha de Nacimiento</string>
+    <string name="createAccount">Crear Cuenta</string>
+    <string name="required">*Obligatorio</string>
+    <string name="registerMessage">Registrando, por favor espere…</string>
+    <string name="registerSuccess">Registro exitoso</string>
+    <string name="registerDateLabel">"dd/mm/yyyy"</string>
+
+    <!-- Error messages for Login and Register -->
+    <string name="errorServer">Ah ocurrido un error…</string>
+    <string name="errorEmptyField">Todos los campos son obligatorios</string>
+    <string name="errorInvalidEmail">Correo electrónico no válido…</string>
+    <string name="errorInvalidPassword">La contraseña debe contener al menos seis caracteres</string>
+
+    <!--  Main Activity  -->
+    <string name="mainTitle">Descubre!</string>
+
+    <!--  menu main bottom  -->
+    <string name="home">Lives</string>
+    <string name="live">Transmitir</string>
+    <string name="profile">Perfil</string>
+
+    <!--  LiveVideoPlayer -->
+    <string name="rewindDescription">Botón de rebobinado</string>
+    <string name="playDescription">Botón reproducir</string>
+    <string name="pauseDescription">Botón de pausa</string>
+    <string name="forwardDescription">Botón de avance</string>
+    <string name="fullscreenDescription">Botón de pantalla completa</string>
+
+    <string name="player_position"> -- </string>
+    <string name="player_slash">/</string>
+    <string name="player_duration">00:00</string>
+    <string name="retry">Intentar</string>
+    <string name="exampleName">nombre de la transmisión (agregue en vivo = 1 si está en vivo, por ejemplo, prueba en vivo = 1)</string>
+
+    <string name="storage_permission_denied">Se denegó el permiso para acceder al almacenamiento</string>
+    <string name="error_no_decoder">Este dispositivo no proporciona un decodificador para <xliff:g id="mime_type">%1$s</xliff:g></string>
+    <string name="error_no_secure_decoder">Este dispositivo no proporciona un decodificador seguro para <xliff:g id="mime_type">%1$s</xliff:g></string>
+    <string name="error_querying_decoders">No se pueden consultar los decodificadores del dispositivo</string>
+    <string name="error_instantiating_decoder">No se puede instanciar el decodificador <xliff:g id="decoder_name">%1$s</xliff:g></string>
+    <string name="error_unsupported_video">Los medios incluyen pistas de video, pero este dispositivo no puede reproducir ninguno</string>
+    <string name="error_unsupported_audio">Los medios incluyen pistas de audio, pero este dispositivo no puede reproducir ninguna</string>
+    <string name="error_generic">Reproducción fallida</string>
+
+    <!--  LiveVideoBroadcaster  -->
+    <string name="settingsButton">Botón de configuración</string>
+    <string name="switchCameraButton">Cambiar de cámara</string>
+    <string name="toggleMicButton">Alternar botón de silenciar micrófono</string>
+
+    <string name="stream_name"> -- </string>
+    <string name="start_broadcasting">Iniciar Stream</string>
+    <string name="live_indicator">en-vivo</string>
+    <string name="stop_broadcasting">Detener</string>
+    <string name="permission">Permiso</string>
+    <string name="broadcast_connection_lost">Se perdió la conexión con el servidor</string>
+    <string name="app_doesnot_work_without_permissions">La aplicación no funciona sin permisos. Por favor, dé permiso a Cámara y Grabar audio en la configuración de la aplicación</string>
+    <string name="stream_not_started">Error al iniciar. Verifique la URL del servidor y las credenciales de seguridad.</string>
+    <string name="streaming_not_finished">Tu transmisión anterior aún envía paquetes debido a la baja velocidad de Internet</string>
+    <string name="oopps_shouldnt_happen">Vaya, esto no debería suceder. Informe al desarrollador de este problema</string>
+
+    <string name="logout">Cerrar sesión</string>
+</resources>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -11,14 +12,32 @@
         android:id="@+id/fragment_container_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/nav_view_main"/>
+        android:layout_above="@id/bottomAppBar"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_view_main"
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:theme="@style/ThemeOverlay.Material3.BottomAppBar"
-        app:menu="@menu/menu_main_bottom" />
+        android:layout_gravity="bottom"
+        app:fabCradleMargin="15dp"
+        app:fabCradleRoundedCornerRadius="10dp"
+        app:fabCradleVerticalOffset="10dp">
 
-</RelativeLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_view_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            app:menu="@menu/menu_main_bottom" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/init_stream"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/bottomAppBar"
+        android:src="@drawable/streaming_ico"
+        android:contentDescription="@string/live" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

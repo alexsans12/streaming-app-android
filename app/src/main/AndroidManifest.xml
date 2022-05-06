@@ -29,28 +29,30 @@
         android:theme="@style/Theme.StreamingApp">
         <activity
             android:name=".LiveVideoBroadcaster.LiveVideoBroadcasterActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/Theme.StreamingApp.NoActionBar"
             android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection"
             android:exported="false" />
         <activity
             android:name=".LiveVideoPlayer.LiveVideoPlayerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/Theme.StreamingApp.NoActionBar"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
+            android:theme="@style/Theme.StreamingApp"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.StreamingApp.NoActionBar"/>
         <activity
             android:name=".LoginActivity"
+            android:theme="@style/Theme.StreamingApp"
             android:exported="false" />
         <activity
             android:name=".LoadActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.StreamingApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

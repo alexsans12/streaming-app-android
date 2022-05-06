@@ -21,6 +21,42 @@
             android:text="Ver live"
             android:background="@color/purple_500"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="@string/loginSuccess"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="@string/loginSuccess"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="@string/loginSuccess"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="@string/loginSuccess"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="@string/loginSuccess"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="@string/loginSuccess"
+            />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </ScrollView>

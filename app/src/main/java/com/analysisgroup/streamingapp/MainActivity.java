@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.analysisgroup.streamingapp.LiveVideoBroadcaster.LiveVideoBroadcasterActivity;
@@ -14,6 +15,7 @@ import com.analysisgroup.streamingapp.MainFragments.HomeFragment;
 import com.analysisgroup.streamingapp.MainFragments.LiveFragment;
 import com.analysisgroup.streamingapp.MainFragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,8 +37,16 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         firebaseUser = firebaseAuth.getCurrentUser();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view_main);
+        bottomNavigationView.setBackground(null);
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setItemIconTintList(null);
+
+        FloatingActionButton floatingActionButton = findViewById(R.id.init_stream);
+
+        floatingActionButton.setOnClickListener(click -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_main, new LiveFragment()).commit();
+        });
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -66,11 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             case R.id.home:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_main, new HomeFragment()).commit();
-                break;
-            case R.id.live:
-                startActivity(new Intent(MainActivity.this, LiveVideoBroadcasterActivity.class));
-                /*getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_main, new LiveFragment()).commit();*/
                 break;
             case R.id.profile:
                 getSupportFragmentManager().beginTransaction()

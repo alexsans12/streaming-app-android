@@ -1,36 +1,47 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Streaming App</string>
-    <string name="developer">Desarrollado por Analysis Group</string>
+    <string name="developer">Developed by Analysis Group</string>
+    <string name="welcome">Welcome </string>
 
     <!--  Login  -->
-    <string name="loginTitle">Vamos a iniciar sesión</string>
-    <string name="loginSubtitle">Bienvenido de nuevo</string>
+    <string name="loginTitle">Let\'s log in</string>
+    <string name="loginSubtitle">Welcome back</string>
     <string name="email">Email</string>
-    <string name="password">Contraseña</string>
-    <string name="login">Iniciar Sesión</string>
-    <string name="loginAccount">No tienes una cuenta?</string>
-    <string name="loginRegister">Registrate</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="loginAccount">You do not have an account?</string>
+    <string name="loginRegister">Sign up</string>
+    <string name="loginMessage">Logging in, please wait…</string>
+    <string name="loginSuccess">Login successfully</string>
+    <string name="loginMessageError">Check if the email or password is correct</string>
 
     <!--  Register Activity  -->
-    <string name="registerTitle">Unete a nuestra plataforma</string>
-    <string name="registerSubtitle">Crea tu cuenta gratis</string>
-    <string name="username">Nombre de Usuario</string>
-    <string name="firstName">Nombre</string>
-    <string name="lastName">Apellidos</string>
-    <string name="birthday">Fecha de Nacimiento</string>
-    <string name="createAccount">Crear Cuenta</string>
-    <string name="required">*Obligatorio</string>
+    <string name="registerBarTitle">Create an account</string>
+    <string name="registerTitle">Join our platform</string>
+    <string name="registerSubtitle">Create your free account</string>
+    <string name="username">Username</string>
+    <string name="firstName">First name</string>
+    <string name="lastName">Last name</string>
+    <string name="birthday">Date of birth</string>
+    <string name="createAccount">Create Account</string>
+    <string name="required">*Required</string>
+    <string name="registerMessage">Registering, please wait…</string>
+    <string name="registerSuccess">Successful registration</string>
+    <string name="registerDateLabel">"dd/mm/yyyy"</string>
+
+    <!-- Error messages for Login and Register -->
+    <string name="errorServer">An error has occurred…</string>
+    <string name="errorEmptyField">All fields must be filled</string>
+    <string name="errorInvalidEmail">Invalid email…</string>
+    <string name="errorInvalidPassword">Password must contain at least six characters</string>
 
     <!--  Main Activity  -->
-    <string name="mainTitle">Descubre!</string>
+    <string name="mainTitle">Discover!</string>
 
     <!--  menu main bottom  -->
     <string name="home">Lives</string>
-    <string name="live">Transmitir</string>
-    <string name="profile">Perfil</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="live">Transmit</string>
+    <string name="profile">Profile</string>
 
     <!--  LiveVideoPlayer -->
     <string name="rewindDescription">Rewind button</string>
@@ -59,7 +70,7 @@
     <string name="toggleMicButton">Toggle Mute Mic Button</string>
 
     <string name="stream_name"> -- </string>
-    <string name="start_broadcasting">Iniciar Stream</string>
+    <string name="start_broadcasting">Start stream</string>
     <string name="live_indicator">on-air</string>
     <string name="stop_broadcasting">Stop</string>
     <string name="permission">Permission</string>
@@ -70,6 +81,4 @@
     <string name="oopps_shouldnt_happen">Oopps this shouldn\'t be happened. Please let the library developer this status</string>
 
     <string name="logout">Logout</string>
-
-
 </resources>

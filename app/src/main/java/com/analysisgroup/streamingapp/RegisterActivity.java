@@ -1,25 +1,17 @@
 package com.analysisgroup.streamingapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -47,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Created action bar
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Crear una cuenta"); // set the title.
+        actionBar.setTitle(R.string.registerBarTitle); // set the title.
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
@@ -65,20 +56,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         MaterialDatePicker.Builder<Long> datePicker = MaterialDatePicker.Builder.datePicker();
         datePicker.setTheme(R.style.ThemeOverlay_App_DatePicker);
-        datePicker.setTitleText("Fecha de nacimiento");
+        datePicker.setTitleText(R.string.birthday);
         MaterialDatePicker<Long> datePickerBuild = datePicker.build();
 
         Birthday.setOnClickListener(view -> datePickerBuild.show(getSupportFragmentManager(), "DATE_PICKER"));
 
         datePickerBuild.addOnPositiveButtonClickListener(selection -> {
-            Calendar date = Calendar.getInstance();
-            date.setTimeInMillis(selection);
+            calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(selection);
             SimpleDateFormat dateFormat = new SimpleDateFormat("d'/'M'/'yyyy");
-            String sDate = dateFormat.format(date.getTime());
+            String sDate = dateFormat.format(calendar.getTime());
             Birthday.setText(sDate);
         });
-
-        Birthday.setText("dd/mm/yyyy");
 
         // Click event button
         btnRegistrar.setOnClickListener(view -> {
@@ -90,15 +79,15 @@ public class RegisterActivity extends AppCompatActivity {
             String password = Password.getText().toString();
 
             if(email.equals("") || password.equals("") || birthday.equals("") || lastName.equals("") || firstName.equals("") || username.equals("")) {
-                Toast.makeText(RegisterActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, R.string.errorEmptyField, Toast.LENGTH_SHORT).show();
             } else {
                 //Validation
                 if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Email.setError("Invalid email...");
+                    Email.setError(getString(R.string.errorInvalidEmail));
                     Email.setFocusable(true);
                 }
                 else if(Password.length() < 6) {
-                    Password.setError("Password must contain at least six characters");
+                    Password.setError(getString(R.string.errorInvalidPassword));
                     Password.setFocusable(true);
                 }
                 else {
@@ -108,60 +97,54 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         progressDialog = new ProgressDialog(RegisterActivity.this);
-        progressDialog.setMessage("Registering, please wait...");
+        progressDialog.setMessage(getString(R.string.registerMessage));
         progressDialog.setCancelable(false);
 
     }
 
     private void registerAccount(String email, String password) {
         auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //If the administrator was created correctly
-                        if(task.isSuccessful()) {
-                            progressDialog.dismiss();
-                            FirebaseUser user = auth.getCurrentUser();
-                            assert user != null; //Verify that admin is not null
+                .addOnCompleteListener(task -> {
+                    //If the administrator was created correctly
+                    if(task.isSuccessful()) {
+                        progressDialog.dismiss();
+                        FirebaseUser user = auth.getCurrentUser();
+                        assert user != null; //Verify that admin is not null
 
-                            //Convert admin data to string
-                            String UID = user.getUid();
-                            String username = Username.getText().toString();
-                            String email2 = Email.getText().toString();
-                            String firstName = FirstName.getText().toString();
-                            String lastName = LastName.getText().toString();
-                            String birthday = Birthday.getText().toString();
+                        //Convert admin data to string
+                        String UID = user.getUid();
+                        String username = Username.getText().toString();
+                        String email2 = Email.getText().toString();
+                        String firstName = FirstName.getText().toString();
+                        String lastName = LastName.getText().toString();
+                        String birthday = Birthday.getText().toString();
+                        String key = String.valueOf(Calendar.getInstance().getTimeInMillis());
 
-                            HashMap<Object, Object> Users = new HashMap<>();
-                            Users.put("UID", UID);
-                            Users.put("Username", username);
-                            Users.put("Email", email2);
-                            Users.put("FirstName", firstName);
-                            Users.put("LastName", lastName);
-                            Users.put("Birthday", birthday);
-                            Users.put("image", "");
+                        HashMap<Object, Object> Users = new HashMap<>();
+                        Users.put("UID", UID);
+                        Users.put("Username", username);
+                        Users.put("Email", email2);
+                        Users.put("FirstName", firstName);
+                        Users.put("LastName", lastName);
+                        Users.put("Birthday", birthday);
+                        Users.put("SecretKey", key);
+                        Users.put("Image", "");
 
-                            // Initializing firebaseDatabase
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference reference = database.getReference("DATABASE USERS");
-                            reference.child(UID).setValue(Users);
+                        // Initializing firebaseDatabase
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference reference = database.getReference("DATABASE USERS");
+                        reference.child(UID).setValue(Users);
 
-                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                            Toast.makeText(RegisterActivity.this, "Successful registration", Toast.LENGTH_SHORT).show();
-                            RegisterActivity.this.finish();
-                        }
-                        else {
-                            progressDialog.dismiss();
-                            Toast.makeText(RegisterActivity.this, "An error has occurred", Toast.LENGTH_SHORT).show();
-                        }
+                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                        Toast.makeText(RegisterActivity.this, R.string.registerSuccess, Toast.LENGTH_SHORT).show();
+                        RegisterActivity.this.finish();
+                    }
+                    else {
+                        progressDialog.dismiss();
+                        Toast.makeText(RegisterActivity.this, R.string.errorServer, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                .addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     @Override
