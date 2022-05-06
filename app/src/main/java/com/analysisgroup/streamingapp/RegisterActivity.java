@@ -26,7 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -36,8 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnRegistrar;
 
     FirebaseAuth auth;
+
     ProgressDialog progressDialog;
-    Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,45 +63,58 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegistrar = findViewById(R.id.btnRegister);
 
         MaterialDatePicker.Builder<Long> datePicker = MaterialDatePicker.Builder.datePicker();
-        datePicker.setTheme(R.style.ThemeOverlay_App_DatePicker);
-        datePicker.setTitleText("Fecha de nacimiento");
+        datePicker.setTitleText("Selecciona la fecha");
         MaterialDatePicker<Long> datePickerBuild = datePicker.build();
 
-        Birthday.setOnClickListener(view -> datePickerBuild.show(getSupportFragmentManager(), "DATE_PICKER"));
-
-        datePickerBuild.addOnPositiveButtonClickListener(selection -> {
-            Calendar date = Calendar.getInstance();
-            date.setTimeInMillis(selection);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("d'/'M'/'yyyy");
-            String sDate = dateFormat.format(date.getTime());
-            Birthday.setText(sDate);
+        Birthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datePickerBuild.show(getSupportFragmentManager(), "DATE_PICKER");
+            }
         });
 
-        Birthday.setText("dd/mm/yyyy");
+        datePickerBuild.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
+            @Override
+            public void onPositiveButtonClick(Long selection) {
+                Date date = new Date(datePickerBuild.getHeaderText());
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("d'/'M'/'yyyy");
+                String sDate = dateFormat.format(date);
+                Birthday.setText(sDate);
+            }
+        });
+
+        Date date = new Date();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("d'/'M'/'yyyy");
+        String sDate = dateFormat.format(date);
+
+        Birthday.setText(sDate);
 
         // Click event button
-        btnRegistrar.setOnClickListener(view -> {
-            String username = Username.getText().toString();
-            String firstName = FirstName.getText().toString();
-            String lastName = LastName.getText().toString();
-            String birthday = Birthday.getText().toString();
-            String email = Email.getText().toString();
-            String password = Password.getText().toString();
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = Username.getText().toString();
+                String firstName = FirstName.getText().toString();
+                String lastName = LastName.getText().toString();
+                String birthday = Birthday.getText().toString();
+                String email = Email.getText().toString();
+                String password = Password.getText().toString();
 
-            if(email.equals("") || password.equals("") || birthday.equals("") || lastName.equals("") || firstName.equals("") || username.equals("")) {
-                Toast.makeText(RegisterActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-            } else {
-                //Validation
-                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Email.setError("Invalid email...");
-                    Email.setFocusable(true);
-                }
-                else if(Password.length() < 6) {
-                    Password.setError("Password must contain at least six characters");
-                    Password.setFocusable(true);
-                }
-                else {
-                    registerAccount(email, password);
+                if(email.equals("") || password.equals("") || birthday.equals("") || lastName.equals("") || firstName.equals("") || username.equals("")) {
+                    Toast.makeText(RegisterActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+                } else {
+                    //Validation
+                    if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                        Email.setError("Invalid email...");
+                        Email.setFocusable(true);
+                    }
+                    else if(Password.length() < 6) {
+                        Password.setError("Password must contain at least six characters");
+                        Password.setFocusable(true);
+                    }
+                    else {
+                        registerAccount(email, password);
+                    }
                 }
             }
         });
