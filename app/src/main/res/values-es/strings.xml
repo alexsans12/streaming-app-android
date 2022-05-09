@@ -28,6 +28,7 @@
     <string name="required">*Obligatorio</string>
     <string name="registerMessage">Registrando, por favor espere…</string>
     <string name="registerSuccess">Registro exitoso</string>
+    <string name="registerKeyError">No se pudo crear su clave de transmisión</string>
     <string name="registerDateLabel">"dd/mm/yyyy"</string>
 
     <!-- Error messages for Login and Register -->

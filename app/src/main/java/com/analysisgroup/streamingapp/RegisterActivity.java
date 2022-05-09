@@ -6,20 +6,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -30,10 +46,15 @@ public class RegisterActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     Calendar calendar;
 
+    RequestQueue requestQueue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        // For Web Services
+        requestQueue = Volley.newRequestQueue(this);
 
         // Created action bar
         ActionBar actionBar = getSupportActionBar();
@@ -130,6 +151,8 @@ public class RegisterActivity extends AppCompatActivity {
                         Users.put("SecretKey", key);
                         Users.put("Image", "");
 
+                        createStream(key, username);
+
                         // Initializing firebaseDatabase
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference reference = database.getReference("DATABASE USERS");
@@ -145,6 +168,46 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    private void createStream(String key, String username) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("streamId", key);
+            jsonObject.put("type", "liveStream");
+            jsonObject.put("publishType", "LiveApp");
+            jsonObject.put("name", username);
+            jsonObject.put("description", "");
+            jsonObject.put("publish", true);
+            jsonObject.put("publicStream", true);
+            jsonObject.put("is360", false);
+            jsonObject.put("category", null);
+            jsonObject.put("username", username);
+            jsonObject.put("password", null);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST,"http://20.124.2.54:5080/LiveApp/rest/v2/broadcasts/create", jsonObject,
+                response -> {
+                    try {
+                        JSONObject objectResponse = new JSONObject(response.toString());
+                        Toast.makeText(this, objectResponse.getString("status"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                },
+                error -> {
+                    if(error instanceof ServerError)
+                        Log.i("TAG", "SERVER ERROR");
+                    if(error instanceof NoConnectionError)
+                        Log.i("TAG", "There is no internet connection");
+                    if(error instanceof NetworkError)
+                        Log.i("TAG", "Network");
+                }
+        );
+        requestQueue.add(postRequest);
     }
 
     @Override

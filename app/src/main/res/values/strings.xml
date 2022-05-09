@@ -27,6 +27,7 @@
     <string name="required">*Required</string>
     <string name="registerMessage">Registering, please wait…</string>
     <string name="registerSuccess">Successful registration</string>
+    <string name="registerKeyError">Your stream key could not be created</string>
     <string name="registerDateLabel">"dd/mm/yyyy"</string>
 
     <!-- Error messages for Login and Register -->

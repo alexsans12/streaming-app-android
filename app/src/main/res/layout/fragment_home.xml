@@ -10,9 +10,9 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp"
+        android:padding="15dp"
         android:orientation="vertical"
-        android:gravity="center" >
+        android:gravity="center">
 
         <Button
             android:id="@+id/button_live"
@@ -21,42 +21,19 @@
             android:text="Ver live"
             android:background="@color/purple_500"/>
 
-        <TextView
+        <Button
+            android:id="@+id/button_stream"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="@string/loginSuccess"
-            />
+            android:layout_height="wrap_content"
+            android:text="Ver Info"
+            android:background="@color/purple_500"/>
 
         <TextView
+            android:id="@+id/text_stream"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:text="@string/loginSuccess"
             />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="@string/loginSuccess"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="@string/loginSuccess"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="@string/loginSuccess"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="@string/loginSuccess"
-            />
-
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </ScrollView>
