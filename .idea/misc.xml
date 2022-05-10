@@ -17,7 +17,9 @@
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/fragment_home.xml" value="0.19895833333333332" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/fragment_live.xml" value="0.19895833333333332" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/fragment_profile.xml" value="0.19895833333333332" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/item_stream.xml" value="0.25" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/layout_camera_resolutions.xml" value="0.19895833333333332" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/stream_item.xml" value="0.25" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/menu/menu_main_bottom.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/drawable-anydpi/forward_ico.xml" value="0.179" />
         <entry key="app/src/main/res/drawable-anydpi/fullscreen_exit_ico.xml" value="0.179" />

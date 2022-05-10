@@ -1,13 +1,9 @@
 package com.analysisgroup.streamingapp.LiveVideoPlayer;
 
-import static com.analysisgroup.streamingapp.MainActivity.HLS_BASE_URL;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.WindowManager;
@@ -59,7 +55,7 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
     private DebugTextViewHelper debugViewHelper;
     private DataSource.Factory dataSourceFactory;
     protected MediaSource mediaSource;
-    protected Uri uri = Uri.parse(HLS_BASE_URL);
+    protected Uri uri;
 
     // For ad playback only.
     @Nullable
@@ -78,6 +74,11 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
         setContentView(R.layout.activity_live_video_player);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        Bundle bundle = getIntent().getExtras();
+        String URL_STREAM = bundle.getString("streamUrl");
+
+        uri = Uri.parse(URL_STREAM);
 
         findView();
 
@@ -221,9 +222,6 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
             }
             releasePlayer();
         }
-
-        //player.pause();
-        //player.setPlayWhenReady(false);
     }
 
     @Override
@@ -246,8 +244,7 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
     }
 
     @Override
-    public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (grantResults.length == 0) {
             // Empty results are triggered if a permission is requested while another request was already
@@ -286,6 +283,8 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
         public void onPlayerError(PlaybackException error) {
             Player.Listener.super.onPlayerError(error);
             Toast.makeText(LiveVideoPlayerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            releasePlayer();
+            initializePlayer();
         }
     };
 

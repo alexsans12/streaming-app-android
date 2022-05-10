@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     FirebaseUser firebaseUser;
 
     public static final String RTMP_BASE_URL = "rtmp://20.124.2.54/LiveApp/999831198613297070837254";
-    public static final String HLS_BASE_URL = "http://20.124.2.54:5080/LiveApp/streams/999831198613297070837254.m3u8?token=undefined&subscriberId=undefined&subscriberCode=undefined";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_main, new HomeFragment()).commit();
+                    .replace(R.id.fragment_container_main, new ProfileFragment()).commit();
         }
     }
 
@@ -69,13 +68,12 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         }
     }
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_main, new HomeFragment()).commit();
+                        .replace(R.id.fragment_container_main, new HomeFragment(), "home_fragment").commit();
                 break;
             case R.id.profile:
                 getSupportFragmentManager().beginTransaction()

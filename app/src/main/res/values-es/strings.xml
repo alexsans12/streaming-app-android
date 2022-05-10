@@ -40,6 +40,13 @@
     <!--  Main Activity  -->
     <string name="mainTitle">Descubre!</string>
 
+    <!--  Item Stream  -->
+    <string name="streamTitle">Titulo de Ejemplo</string>
+    <string name="usernameHolder">Nombre de Usuario</string>
+    <string name="views">1000</string>
+    <string name="descriptionThumbnail">Miniatura para transmisión en vivo</string>
+    <string name="descriptionUserProfilePic">Imagen de perfil de usuario</string>
+
     <!--  menu main bottom  -->
     <string name="home">Lives</string>
     <string name="live">Transmitir</string>

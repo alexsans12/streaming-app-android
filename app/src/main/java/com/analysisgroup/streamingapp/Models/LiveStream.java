@@ -1,19 +1,29 @@
 package com.analysisgroup.streamingapp.Models;
 
-public class Stream {
+public class LiveStream {
 
     private String streamId;
     private String status;
-    private final String publishType = "LiveApp";
+    private String username;
     private String name;
     private String description;
-    private final boolean publish = true;
-    private final boolean publicStream = true;
-    private final boolean is360 = false;
     private String streamUrl;
     private int hlsViewerCount;
 
-    public Stream() {
+    public LiveStream() {
+    }
+
+    public LiveStream(String username, String name) {
+        this.username = username;
+        this.name = name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getStreamId() {
@@ -33,6 +43,7 @@ public class Stream {
     }
 
     public String getPublishType() {
+        String publishType = "LiveApp";
         return publishType;
     }
 
@@ -53,15 +64,15 @@ public class Stream {
     }
 
     public boolean isPublish() {
-        return publish;
+        return true;
     }
 
     public boolean isPublicStream() {
-        return publicStream;
+        return true;
     }
 
     public boolean isIs360() {
-        return is360;
+        return false;
     }
 
     public String getStreamUrl() {

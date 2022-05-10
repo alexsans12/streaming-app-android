@@ -3,37 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
+    android:layout_marginBottom="100dp"
+    android:background="@android:color/transparent"
     tools:context=".MainFragments.HomeFragment">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/button_live"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ver live"
-            android:background="@color/purple_500"/>
-
-        <Button
-            android:id="@+id/button_stream"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ver Info"
-            android:background="@color/purple_500"/>
-
-        <TextView
-            android:id="@+id/text_stream"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/loginSuccess"
-            />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        android:padding="10dp"/>
 
 </ScrollView>

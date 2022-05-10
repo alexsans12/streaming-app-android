@@ -180,6 +180,7 @@ public class RegisterActivity extends AppCompatActivity {
             jsonObject.put("description", "");
             jsonObject.put("publish", true);
             jsonObject.put("publicStream", true);
+            jsonObject.put("streamUrl", "http://20.124.2.54:5080/LiveApp/streams/"+key+".m3u8?token=undefined&subscriberId=undefined&subscriberCode=undefined");
             jsonObject.put("is360", false);
             jsonObject.put("category", null);
             jsonObject.put("username", username);

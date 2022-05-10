@@ -1,91 +1,116 @@
 package com.analysisgroup.streamingapp.MainFragments;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.analysisgroup.streamingapp.LiveVideoPlayer.LiveVideoPlayerActivity;
+import com.analysisgroup.streamingapp.Models.LiveStream;
 import com.analysisgroup.streamingapp.R;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.ServerError;
+import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    Button btnView;
-    Button btnInfo;
-    TextView info;
-
-    RequestQueue requestQueue;
+    RecyclerView recyclerView;
+    LiveStreamAdapter adapter;
+    private static String URL_JSON = "http://20.124.2.54:5080/LiveApp/rest/v2/broadcasts/list/0/10";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        requestQueue = Volley.newRequestQueue(getContext());
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        btnView = view.findViewById(R.id.button_live);
-        btnInfo = view.findViewById(R.id.button_stream);
-        info = view.findViewById(R.id.text_stream);
+        extractLiveStreams(Volley.newRequestQueue(getContext()));
+        /*List<LiveStream> liveStreams = new ArrayList<>();
+        LiveStream stream = new LiveStream();
+        stream.setStatus("created");
+        stream.setName("Jugando chill Minecraft");
+        stream.setUsername("Joshgamer777");
+        stream.setHlsViewerCount(1500);
+        liveStreams.add(stream);
 
-        btnView.setOnClickListener(viewClick ->  {
-                Intent intent = new Intent(getActivity(), LiveVideoPlayerActivity.class);
-                startActivity(intent);
-        });
+        LiveStream stream2 = new LiveStream();
+        stream2.setStatus("created");
+        stream2.setName("Venta de ropa");
+        stream2.setUsername("Juan");
+        stream2.setHlsViewerCount(3500);
+        liveStreams.add(stream2);
 
-        btnInfo.setOnClickListener(viewClick -> {
-            getStreams();
-        });
+        LiveStream stream3 = new LiveStream();
+        stream3.setStatus("created");
+        stream3.setName("Si te ries memeperdonas");
+        stream3.setUsername("Vicio One More Time");
+        stream3.setHlsViewerCount(10000);
+        liveStreams.add(stream3);
+
+        adapter = new LiveStreamAdapter(getContext(),liveStreams);
+        adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);*/
 
         return view;
     }
 
-    private void getStreams() {
-        JsonArrayRequest postRequest = new JsonArrayRequest(Request.Method.GET,"http://20.124.2.54:5080/LiveApp/rest/v2/broadcasts/list/0/10", null,
-            response -> {
-                int size = response.length();
-                for (int i = 0; i < size; i++) {
+    private void extractLiveStreams(RequestQueue queue) {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL_JSON, null, new Response.Listener<JSONArray>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(JSONArray response) {
+
+                List<LiveStream> liveStreamList = new ArrayList<>();
+
+                for (int i = 0; i < response.length(); i++) {
                     try {
-                        JSONObject jsonObject = new JSONObject(response.get(i).toString());
-                        info.append(jsonObject.getString("streamId") + "\n");
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        LiveStream liveStream = new LiveStream();
+                        liveStream.setName(jsonObject.getString("name"));
+                        liveStream.setUsername(jsonObject.getString("username"));
+                        liveStream.setStatus(jsonObject.getString("status"));
+                        liveStream.setHlsViewerCount(jsonObject.getInt("hlsViewerCount"));
+                        liveStream.setDescription(jsonObject.getString("description"));
+                        liveStream.setStreamId(jsonObject.getString("streamId"));
+                        liveStream.setStreamUrl(jsonObject.getString("streamUrl"));
+
+                        Log.i("info",liveStream.getStreamId());
+                        Log.i("info",liveStream.getName());
+                        Log.i("info",liveStream.getUsername());
+                        Log.i("info",liveStream.getStatus());
+                        Log.i("info",String.valueOf(liveStream.getHlsViewerCount()));
+                        Log.i("info",liveStream.getDescription());
+                        Log.i("info",liveStream.getStreamUrl());
+
+                        liveStreamList.add(liveStream);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
-            }, error -> {
-                if(error instanceof ServerError)
-                    Log.i("TAG", "SERVER ERROR");
-                if(error instanceof NoConnectionError)
-                    Log.i("TAG", "There is no internet connection");
-                if(error instanceof NetworkError)
-                    Log.i("TAG", "Network");
+                adapter = new LiveStreamAdapter(getContext(), liveStreamList);
+                adapter.notifyDataSetChanged();
+                recyclerView.setAdapter(adapter);
             }
-        );
-        requestQueue.add(postRequest);
-    }
+        }, error -> Log.d("tag", "onErrorResponse: " + error.getMessage()));
 
+        queue.add(jsonArrayRequest);
+    }
 }
