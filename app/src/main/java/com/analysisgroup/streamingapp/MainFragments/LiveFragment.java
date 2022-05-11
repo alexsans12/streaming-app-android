@@ -82,7 +82,6 @@ public class LiveFragment extends Fragment {
             Intent intent = new Intent(getActivity(), LiveVideoBroadcasterActivity.class);
             intent.putExtra("keyLiveStream", keyUser);
             startActivity(intent);
-            getActivity().finish();
         });
 
         return view;

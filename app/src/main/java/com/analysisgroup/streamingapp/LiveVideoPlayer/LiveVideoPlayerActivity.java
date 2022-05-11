@@ -284,7 +284,7 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
             Player.Listener.super.onPlayerError(error);
             Toast.makeText(LiveVideoPlayerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             releasePlayer();
-            initializePlayer();
+            finish();
         }
     };
 

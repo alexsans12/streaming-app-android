@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -86,15 +87,8 @@ public class HomeFragment extends Fragment {
                     liveStream.setStreamId(jsonObject.getString("streamId"));
                     liveStream.setStreamUrl(jsonObject.getString("streamUrl"));
 
-                    Log.i("info",liveStream.getStreamId());
-                    Log.i("info",liveStream.getName());
-                    Log.i("info",liveStream.getUsername());
-                    Log.i("info",liveStream.getStatus());
-                    Log.i("info",String.valueOf(liveStream.getHlsViewerCount()));
-                    Log.i("info",liveStream.getDescription());
-                    Log.i("info",liveStream.getStreamUrl());
-
-                    liveStreamList.add(liveStream);
+                    if (liveStream.getStatus().equals("broadcasting"))
+                        liveStreamList.add(liveStream);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

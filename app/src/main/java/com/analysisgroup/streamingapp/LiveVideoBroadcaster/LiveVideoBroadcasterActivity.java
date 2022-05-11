@@ -33,6 +33,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.analysisgroup.streamingapp.MainActivity;
 import com.analysisgroup.streamingapp.R;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -115,7 +116,7 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
         mStreamLiveStatus = findViewById(R.id.stream_live_status);
         muteMicButton = findViewById(R.id.mic_mute_button);
 
-        mBroadcastControlButton = (Button) findViewById(R.id.toggle_broadcasting);
+        mBroadcastControlButton = findViewById(R.id.toggle_broadcasting);
 
         // Configure the GLSurfaceView.  This will start the Renderer thread, with an
         // appropriate EGL activity.
