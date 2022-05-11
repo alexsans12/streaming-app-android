@@ -52,6 +52,14 @@
     <string name="live">Transmitir</string>
     <string name="profile">Perfil</string>
 
+    <!--  LiveFragment  -->
+    <string name="createLiveTitle">Crear una transmisión en vivo</string>
+    <string name="setTitleLive">Agrega un título que describa la transmisión en vivo</string>
+    <string name="titleLiveHint">Título</string>
+    <string name="setDescriptionLive">Cuéntales a los usuarios sobre tu transmisión en vivo</string>
+    <string name="descriptionLiveHint">Descripción</string>
+    <string name="readyBtn">Listo</string>
+
     <!--  LiveVideoPlayer -->
     <string name="rewindDescription">Botón de rebobinado</string>
     <string name="playDescription">Botón reproducir</string>

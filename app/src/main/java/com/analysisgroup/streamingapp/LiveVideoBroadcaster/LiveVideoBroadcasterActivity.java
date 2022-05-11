@@ -1,7 +1,5 @@
 package com.analysisgroup.streamingapp.LiveVideoBroadcaster;
 
-import static com.analysisgroup.streamingapp.MainActivity.RTMP_BASE_URL;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.widget.ContentLoadingProgressBar;
@@ -18,7 +16,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.hardware.Camera;
-import android.hardware.camera2.CameraCharacteristics;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.AsyncTask;
@@ -32,7 +29,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,7 +53,6 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
     private ViewGroup mRootView;
     boolean mIsRecording = false;
     boolean mIsMuted = false;
-    private EditText mStreamNameEditText;
     private Timer mTimer;
     private long mElapsedTime;
     public TimerHandler mTimerHandler;
@@ -69,8 +64,11 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
     private ILiveVideoBroadcaster mLiveVideoBroadcaster;
     private Button mBroadcastControlButton;
 
+    private static final String RTMP_URL_BASE = "rtmp://20.124.2.54/LiveApp/";
+    private String keyUser;
+
     /** Defines callbacks for service binding, passed to bindService() */
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className,
@@ -105,15 +103,16 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
         //this makes service do its job until done
         startService(mLiveVideoBroadcasterServiceIntent);
 
+        keyUser = getIntent().getStringExtra("keyLiveStream");
+
         setContentView(R.layout.activity_live_video_broadcaster);
 
         mTimerHandler = new TimerHandler();
-        mStreamNameEditText = (EditText) findViewById(R.id.stream_name_edit_text);
 
-        mRootView = (ViewGroup)findViewById(R.id.root_layout);
-        mSettingsButton = (ImageButton)findViewById(R.id.settings_button);
+        mRootView = findViewById(R.id.root_layout);
+        mSettingsButton = findViewById(R.id.settings_button);
         changeCameraButton = findViewById(R.id.changeCameraButton);
-        mStreamLiveStatus = (TextView) findViewById(R.id.stream_live_status);
+        mStreamLiveStatus = findViewById(R.id.stream_live_status);
         muteMicButton = findViewById(R.id.mic_mute_button);
 
         mBroadcastControlButton = (Button) findViewById(R.id.toggle_broadcasting);
@@ -270,7 +269,6 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
         {
             if (mLiveVideoBroadcaster != null) {
                 if (!mLiveVideoBroadcaster.isConnected()) {
-                    String streamName = mStreamNameEditText.getText().toString();
 
                     new AsyncTask<String, String, Boolean>() {
                         ContentLoadingProgressBar
@@ -304,7 +302,7 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
                                 triggerStopRecording();
                             }
                         }
-                    }.execute(RTMP_BASE_URL /*+ streamName*/);
+                    }.execute(RTMP_URL_BASE+keyUser /*+ streamName*/);
                 }
                 else {
                     Snackbar.make(mRootView, R.string.streaming_not_finished, Snackbar.LENGTH_LONG).show();
@@ -321,6 +319,7 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void toggleMute(View v) {
         if (v instanceof ImageView) {
             ImageView iv = (ImageView) v;

@@ -51,6 +51,14 @@
     <string name="live">Transmit</string>
     <string name="profile">Profile</string>
 
+    <!--  LiveFragment  -->
+    <string name="createLiveTitle">Create a live stream</string>
+    <string name="setTitleLive">Add a title that describes the live stream</string>
+    <string name="titleLiveHint">Title</string>
+    <string name="setDescriptionLive">Tell users about your live stream</string>
+    <string name="descriptionLiveHint">Description</string>
+    <string name="readyBtn">Ready</string>
+
     <!--  LiveVideoPlayer -->
     <string name="rewindDescription">Rewind button</string>
     <string name="playDescription">Play button</string>

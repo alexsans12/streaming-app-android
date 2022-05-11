@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
-    public static final String RTMP_BASE_URL = "rtmp://20.124.2.54/LiveApp/999831198613297070837254";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_main, new ProfileFragment()).commit();
+                    .replace(R.id.fragment_container_main, new HomeFragment()).commit();
         }
     }
 
