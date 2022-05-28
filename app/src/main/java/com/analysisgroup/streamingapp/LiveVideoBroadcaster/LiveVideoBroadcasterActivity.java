@@ -488,6 +488,5 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
         super.onDestroy();
         FirebaseDatabase.getInstance().getReference("DATABASE USERS")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("chat").setValue("");
-        Toast.makeText(this, "Borrando mensajes", Toast.LENGTH_SHORT).show();
     }
 }

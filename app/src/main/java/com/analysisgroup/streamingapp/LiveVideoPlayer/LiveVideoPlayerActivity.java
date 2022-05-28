@@ -50,8 +50,6 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
     private static final String KEY_AUTO_PLAY = "auto_play";
 
     protected StyledPlayerView styledPlayerView;
-    protected LinearLayout debugRootView;
-    protected TextView debugTextView;
     protected @Nullable
     ExoPlayer player;
     private FrameLayout chatContainer;
@@ -112,9 +110,6 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
     }
 
     public void findView() {
-        debugRootView = findViewById(R.id.debug_linear_layout);
-        debugTextView = findViewById(R.id.debug_text_view);
-
         styledPlayerView = findViewById(R.id.player_view);
         styledPlayerView.setControllerVisibilityListener(this);
         styledPlayerView.setErrorMessageProvider(new PlayerErrorMessageProvider());
@@ -134,9 +129,6 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
 
             clientSideAdsLoader = new ImaAdsLoader.Builder(/* context= */ this).build();
             clientSideAdsLoader.setPlayer(player);
-
-            debugViewHelper = new DebugTextViewHelper(player, debugTextView);
-            debugViewHelper.start();
         }
 
         boolean haveStartPosition = startItemIndex != C.INDEX_UNSET;
@@ -313,8 +305,6 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
         if (player != null) {
             updateTrackSelectorParameters();
             updateStartPosition();
-            debugViewHelper.stop();
-            debugViewHelper = null;
             player.release();
             player = null;
             styledPlayerView.setPlayer(/* player= */ null);
@@ -367,7 +357,7 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
 
     @Override
     public void onVisibilityChange(int visibility) {
-        debugRootView.setVisibility(visibility);
+
     }
 
     private class PlayerErrorMessageProvider implements ErrorMessageProvider<PlaybackException> {

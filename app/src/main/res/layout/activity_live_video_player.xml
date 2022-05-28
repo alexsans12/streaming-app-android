@@ -8,28 +8,10 @@
     android:keepScreenOn="true"
     tools:context=".LiveVideoPlayer.LiveVideoPlayerActivity">
 
-    <LinearLayout android:id="@+id/debug_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#88000000"
-        android:layout_alignParentStart="true"
-        android:orientation="vertical">
-
-        <TextView android:id="@+id/debug_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"/>
-
-    </LinearLayout>
-
     <com.google.android.exoplayer2.ui.StyledPlayerView
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/debug_linear_layout"
         android:layout_above="@+id/fragment_container_chat"
         app:show_shuffle_button="true" />
 
