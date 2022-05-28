@@ -57,12 +57,21 @@ public class LiveStreamAdapter extends RecyclerView.Adapter<LiveStreamAdapter.Vi
             Log.d("Error", e.getMessage());
         }
 
+        try {
+            // If image exists
+            Picasso.get().load(list.get(position).getImage()).placeholder(R.drawable.profile_ico).into(holder.profileImage);
+        } catch (Exception e) {
+            //If not exists image
+            Picasso.get().load("https://cdn.onlinewebfonts.com/svg/img_24787.png").into(holder.profileImage);
+        }
+
         holder.livestream.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(inflater.getContext(), LiveVideoPlayerActivity.class);
 
                 Bundle bundle = new Bundle();
+                bundle.putString("keyLiveStream",list.get(position).getStreamId());
                 bundle.putString("streamUrl", list.get(position).getStreamUrl());
 
                 intent.putExtras(bundle);
@@ -77,7 +86,7 @@ public class LiveStreamAdapter extends RecyclerView.Adapter<LiveStreamAdapter.Vi
     }
 
     public static class ViewHolderLive extends RecyclerView.ViewHolder {
-        ImageView streamImage;
+        ImageView streamImage, profileImage;
         TextView titleStream, usernameStream, viewersStream;
         RelativeLayout livestream;
 
@@ -89,7 +98,7 @@ public class LiveStreamAdapter extends RecyclerView.Adapter<LiveStreamAdapter.Vi
             usernameStream = itemView.findViewById(R.id.stream_username);
             viewersStream = itemView.findViewById(R.id.stream_spectators);
             livestream = itemView.findViewById(R.id.livestream);
-
+            profileImage = itemView.findViewById(R.id.stream_profile);
         }
     }
 

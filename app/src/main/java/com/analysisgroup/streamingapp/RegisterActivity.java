@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.auth.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -83,10 +85,9 @@ public class RegisterActivity extends AppCompatActivity {
         Birthday.setOnClickListener(view -> datePickerBuild.show(getSupportFragmentManager(), "DATE_PICKER"));
 
         datePickerBuild.addOnPositiveButtonClickListener(selection -> {
-            calendar = Calendar.getInstance();
+            calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
             calendar.setTimeInMillis(selection);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("d'/'M'/'yyyy");
-            String sDate = dateFormat.format(calendar.getTime());
+            String sDate =  calendar.get(Calendar.DAY_OF_MONTH)+"/"+(calendar.get(Calendar.MONTH)+1)+"/"+calendar.get(Calendar.YEAR);
             Birthday.setText(sDate);
         });
 
@@ -150,6 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Users.put("Birthday", birthday);
                         Users.put("SecretKey", key);
                         Users.put("Image", "");
+                        Users.put("chat", "");
 
                         createStream(key, username);
 
@@ -180,7 +182,7 @@ public class RegisterActivity extends AppCompatActivity {
             jsonObject.put("description", "");
             jsonObject.put("publish", true);
             jsonObject.put("publicStream", true);
-            jsonObject.put("streamUrl", "http://20.124.2.54:5080/LiveApp/streams/"+key+".m3u8?token=undefined&subscriberId=undefined&subscriberCode=undefined");
+            jsonObject.put("streamUrl", "http://20.25.25.216:5080/LiveApp/streams/"+key+".m3u8?token=undefined&subscriberId=undefined&subscriberCode=undefined");
             jsonObject.put("is360", false);
             jsonObject.put("category", null);
             jsonObject.put("username", username);
@@ -189,7 +191,7 @@ public class RegisterActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST,"http://20.124.2.54:5080/LiveApp/rest/v2/broadcasts/create", jsonObject,
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST,"http://20.25.25.216:5080/LiveApp/rest/v2/broadcasts/create", jsonObject,
                 response -> {
                     try {
                         JSONObject objectResponse = new JSONObject(response.toString());

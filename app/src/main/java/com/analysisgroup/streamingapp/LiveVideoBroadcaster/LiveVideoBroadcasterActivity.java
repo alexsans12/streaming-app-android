@@ -1,9 +1,11 @@
 package com.analysisgroup.streamingapp.LiveVideoBroadcaster;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
@@ -15,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
+import android.graphics.drawable.AdaptiveIconDrawable;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
@@ -29,15 +32,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.analysisgroup.streamingapp.MainActivity;
+import com.analysisgroup.streamingapp.LiveChat.ChatFragment;
+import com.analysisgroup.streamingapp.MainFragments.HomeFragment;
+import com.analysisgroup.streamingapp.MainFragments.LiveFragment;
 import com.analysisgroup.streamingapp.R;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -57,15 +67,16 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
     private Timer mTimer;
     private long mElapsedTime;
     public TimerHandler mTimerHandler;
-    private ImageButton mSettingsButton;
+    private ImageButton mSettingsButton, chatButton;
     private CameraResolutionsFragment mCameraResolutionsDialog;
     private Intent mLiveVideoBroadcasterServiceIntent;
     private TextView mStreamLiveStatus;
     private GLSurfaceView mGLView;
     private ILiveVideoBroadcaster mLiveVideoBroadcaster;
     private Button mBroadcastControlButton;
+    private FrameLayout chatContainer;
 
-    private static final String RTMP_URL_BASE = "rtmp://20.124.2.54/LiveApp/";
+    private static final String RTMP_URL_BASE = "rtmp://20.25.25.216/LiveApp/";
     private String keyUser;
 
     /** Defines callbacks for service binding, passed to bindService() */
@@ -90,6 +101,7 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
     };
 
 
+    @SuppressLint("UnsafeOptInUsageError")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +129,29 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
         muteMicButton = findViewById(R.id.mic_mute_button);
 
         mBroadcastControlButton = findViewById(R.id.toggle_broadcasting);
+        chatButton = findViewById(R.id.chat_button);
+
+        chatButton.setOnClickListener(viewClick -> {
+            Fragment frag = getSupportFragmentManager().findFragmentById(R.id.fragment_container_chat);
+            Bundle bundle = new Bundle();
+            bundle.putString("secrectKey", keyUser);
+
+            assert frag != null;
+            frag.setArguments(bundle);
+
+            assert frag != null;
+            if(frag.isVisible()) {
+                FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.detach(frag);
+                fragmentTransaction.commit();
+                chatButton.setImageResource(R.drawable.message_hide_ico);
+            } else {
+                FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.attach(frag);
+                fragmentTransaction.commit();
+                chatButton.setImageResource(R.drawable.message_ico);
+            }
+        });
 
         // Configure the GLSurfaceView.  This will start the Renderer thread, with an
         // appropriate EGL activity.
@@ -232,7 +267,7 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -295,6 +330,17 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
 
                                 mBroadcastControlButton.setText(R.string.stop_broadcasting);
                                 mSettingsButton.setVisibility(View.GONE);
+                                chatButton.setVisibility(View.VISIBLE);
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("secrectKey", keyUser);
+
+                                Fragment fragment = new ChatFragment();
+                                fragment.setArguments(bundle);
+
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_container_chat, fragment).commit();
+
                                 startTimer();//start the recording duration
                             }
                             else {
@@ -337,6 +383,15 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
             mStreamLiveStatus.setVisibility(View.GONE);
             mStreamLiveStatus.setText(R.string.live_indicator);
             mSettingsButton.setVisibility(View.VISIBLE);
+            chatButton.setVisibility(View.GONE);
+
+            Fragment frag = getSupportFragmentManager().findFragmentById(R.id.fragment_container_chat);
+            assert frag != null;
+            if(frag.isVisible()) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.detach(frag);
+                fragmentTransaction.commit();
+            }
 
             stopTimer();
             mLiveVideoBroadcaster.stopBroadcasting();
@@ -426,5 +481,13 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
         }
 
         return String.valueOf(number);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FirebaseDatabase.getInstance().getReference("DATABASE USERS")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("chat").setValue("");
+        Toast.makeText(this, "Borrando mensajes", Toast.LENGTH_SHORT).show();
     }
 }

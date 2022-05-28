@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import com.analysisgroup.streamingapp.LiveChat.ChatFragment;
 import com.analysisgroup.streamingapp.R;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -51,6 +54,7 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
     protected TextView debugTextView;
     protected @Nullable
     ExoPlayer player;
+    private FrameLayout chatContainer;
 
     private DebugTextViewHelper debugViewHelper;
     private DataSource.Factory dataSourceFactory;
@@ -66,6 +70,7 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
     private boolean startAutoPlay;
     private int startItemIndex;
     private long startPosition;
+    private String keyUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +82,18 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
 
         Bundle bundle = getIntent().getExtras();
         String URL_STREAM = bundle.getString("streamUrl");
-
+        keyUser = bundle.getString("keyLiveStream");
         uri = Uri.parse(URL_STREAM);
 
         findView();
+
+        Bundle bundleFrg = new Bundle();
+        bundleFrg.putString("secrectKey", keyUser);
+        Fragment fragment = new ChatFragment();
+        fragment.setArguments(bundleFrg);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container_chat, fragment).commit();
 
         if (savedInstanceState != null) {
             // Restore as DefaultTrackSelector.Parameters in case ExoPlayer specific parameters were set.
@@ -106,6 +119,7 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements Styled
         styledPlayerView.setControllerVisibilityListener(this);
         styledPlayerView.setErrorMessageProvider(new PlayerErrorMessageProvider());
         styledPlayerView.requestFocus();
+        chatContainer = findViewById(R.id.fragment_container_chat);
     }
 
     protected boolean initializePlayer() {

@@ -4,20 +4,28 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/drawable-anydpi/live_ico.xml" value="0.1785" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/drawable-anydpi/message_hide_ico.xml" value="0.1785" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/drawable-anydpi/message_ico.xml" value="0.1785" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/drawable-anydpi/mic_mute_on_ico.xml" value="0.1785" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/drawable-anydpi/profile_ico.xml" value="0.1785" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/drawable-anydpi/send_ico.xml" value="0.1785" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/drawable-anydpi/streaming_ico.xml" value="0.1785" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/drawable-anydpi/unread_ico.xml" value="0.1785" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/drawable/rounded_bubble.xml" value="0.1785" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/drawable/rounded_live.xml" value="0.1785" />
-        <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/activity_live_video_broadcaster.xml" value="0.19895833333333332" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/activity_chat.xml" value="0.203125" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/activity_live_video_broadcaster.xml" value="0.1" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/activity_live_video_player.xml" value="0.19895833333333332" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/activity_load.xml" value="0.19895833333333332" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/activity_login.xml" value="0.19895833333333332" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/chat_adapter_layout.xml" value="0.16666666666666666" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/custom_controller.xml" value="0.19895833333333332" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/fragment_home.xml" value="0.19895833333333332" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/fragment_live.xml" value="0.33" />
-        <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/fragment_profile.xml" value="0.19895833333333332" />
+        <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/fragment_profile.xml" value="0.21" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/item_stream.xml" value="0.25" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/layout_camera_resolutions.xml" value="0.19895833333333332" />
         <entry key="..\:/Projects/StreamingApp/app/src/main/res/layout/stream_item.xml" value="0.25" />

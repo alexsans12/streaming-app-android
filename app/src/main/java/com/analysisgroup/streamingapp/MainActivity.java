@@ -3,14 +3,11 @@ package com.analysisgroup.streamingapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.analysisgroup.streamingapp.LiveVideoBroadcaster.LiveVideoBroadcasterActivity;
 import com.analysisgroup.streamingapp.MainFragments.HomeFragment;
 import com.analysisgroup.streamingapp.MainFragments.LiveFragment;
 import com.analysisgroup.streamingapp.MainFragments.ProfileFragment;
@@ -41,10 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         FloatingActionButton floatingActionButton = findViewById(R.id.init_stream);
 
-        floatingActionButton.setOnClickListener(click -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_main, new LiveFragment()).commit();
-        });
+        floatingActionButton.setOnClickListener(click -> getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container_main, new LiveFragment()).commit());
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -72,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         switch (item.getItemId()) {
             case R.id.home:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_main, new HomeFragment(), "home_fragment").commit();
+                        .replace(R.id.fragment_container_main, new HomeFragment()).commit();
                 break;
             case R.id.profile:
                 getSupportFragmentManager().beginTransaction()

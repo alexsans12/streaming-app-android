@@ -7,6 +7,7 @@ public class LiveStream {
     private String username;
     private String name;
     private String description;
+    private String image;
     private String streamUrl;
     private int hlsViewerCount;
 
@@ -16,6 +17,14 @@ public class LiveStream {
     public LiveStream(String username, String name) {
         this.username = username;
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getUsername() {

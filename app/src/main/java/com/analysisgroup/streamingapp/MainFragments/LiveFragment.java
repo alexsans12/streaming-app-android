@@ -15,12 +15,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.analysisgroup.streamingapp.LiveVideoBroadcaster.LiveVideoBroadcasterActivity;
-import com.analysisgroup.streamingapp.MainActivity;
 import com.analysisgroup.streamingapp.R;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.ServerError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -34,8 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import io.antmedia.android.broadcaster.LiveVideoBroadcaster;
 
 public class LiveFragment extends Fragment {
 
@@ -96,7 +92,7 @@ public class LiveFragment extends Fragment {
             e.printStackTrace();
         }
 
-        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.PUT,"http://20.124.2.54:5080/LiveApp/rest/v2/broadcasts/"+key, jsonObject,
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.PUT,"http://20.25.25.216:5080/LiveApp/rest/v2/broadcasts/"+key, jsonObject,
                 response -> {
                     try {
                         JSONObject objectResponse = new JSONObject(response.toString());
@@ -115,6 +111,6 @@ public class LiveFragment extends Fragment {
                         Log.i("TAG", "Network");
                 }
         );
-        Volley.newRequestQueue(getActivity()).add(postRequest);
+        Volley.newRequestQueue(requireActivity()).add(postRequest);
     }
 }

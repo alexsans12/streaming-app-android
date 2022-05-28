@@ -48,7 +48,7 @@
     <string name="descriptionUserProfilePic">Imagen de perfil de usuario</string>
 
     <!--  menu main bottom  -->
-    <string name="home">Lives</string>
+    <string name="home">Trasmisiones</string>
     <string name="live">Transmitir</string>
     <string name="profile">Perfil</string>
 
@@ -59,6 +59,35 @@
     <string name="setDescriptionLive">Cuéntales a los usuarios sobre tu transmisión en vivo</string>
     <string name="descriptionLiveHint">Descripción</string>
     <string name="readyBtn">Listo</string>
+
+    <!--  ProfileFragment  -->
+    <string name="profileTitle">Perfil</string>
+    <string name="profileUIDTxt">UID: </string>
+    <string name="profileUID"> -- </string>
+    <string name="profileNameTxt">Nombres: </string>
+    <string name="profileName"> -- </string>
+    <string name="profileLastNameTxt">Apellidos: </string>
+    <string name="profileLastName"> -- </string>
+    <string name="profileEmailTxt">Correo electrónico: </string>
+    <string name="profileEmail"> -- </string>
+    <string name="profileAgeTxt">Edad: </string>
+    <string name="profileAge"> -- </string>
+    <string name="streamKeyTxt">Clave de transmision: </string>
+    <string name="streamKey"> -- </string>
+    <string name="btnKey">Mostrar</string>
+    <string name="btnKeyShow">Ocultar</string>
+    <string name="optionsAlert">Cambiar foto de perfil</string>
+    <string name="titleAlert">Elige una opción</string>
+    <string name="optionCamera">Cámara</string>
+    <string name="optionGallery">Galería</string>
+    <string name="secondTitleAlert">Seleccionar imagen de:</string>
+    <string name="progressTitleUpload">Procesando</string>
+    <string name="progressMsgUpload">Se está cambiando la imagen, espere por favor…</string>
+    <string name="cancellationMsg">Cancelado por el usuario</string>
+    <string name="deniedPermission">Permiso denegado</string>
+    <string name="imageUpdated">Imagen actualizada</string>
+    <string name="logoutMsg">Sesión cerrada correctamente</string>
+    <string name="copyKey">Copiado al portapapeles</string>
 
     <!--  LiveVideoPlayer -->
     <string name="rewindDescription">Botón de rebobinado</string>
@@ -86,6 +115,7 @@
     <string name="settingsButton">Botón de configuración</string>
     <string name="switchCameraButton">Cambiar de cámara</string>
     <string name="toggleMicButton">Alternar botón de silenciar micrófono</string>
+    <string name="chatButton">Muestra el chat</string>
 
     <string name="stream_name"> -- </string>
     <string name="start_broadcasting">Iniciar Stream</string>
@@ -99,4 +129,10 @@
     <string name="oopps_shouldnt_happen">Vaya, esto no debería suceder. Informe al desarrollador de este problema</string>
 
     <string name="logout">Cerrar sesión</string>
+
+    <!--  Chat Fragment  -->
+    <string name="messageHint">Escribe algo…</string>
+    <string name="sendButtonDescription">Este botón envía tu mensaje</string>
+
+    <string name="hello_blank_fragment">Hola soy un fragmento en blanco</string>
 </resources>

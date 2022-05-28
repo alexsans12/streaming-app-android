@@ -59,6 +59,35 @@
     <string name="descriptionLiveHint">Description</string>
     <string name="readyBtn">Ready</string>
 
+    <!--  ProfileFragment  -->
+    <string name="profileTitle">Profile</string>
+    <string name="profileUIDTxt">UID: </string>
+    <string name="profileUID"> -- </string>
+    <string name="profileNameTxt">Name: </string>
+    <string name="profileName"> -- </string>
+    <string name="profileLastNameTxt">Last name: </string>
+    <string name="profileLastName"> -- </string>
+    <string name="profileEmailTxt">Email: </string>
+    <string name="profileEmail"> -- </string>
+    <string name="profileAgeTxt">Age: </string>
+    <string name="profileAge"> -- </string>
+    <string name="streamKeyTxt">Transmission key: </string>
+    <string name="streamKey"> -- </string>
+    <string name="btnKey">Show</string>
+    <string name="btnKeyShow">Hide</string>
+    <string name="optionsAlert">Change profile picture</string>
+    <string name="titleAlert">Choose an option</string>
+    <string name="optionCamera">Camera</string>
+    <string name="optionGallery">Gallery</string>
+    <string name="secondTitleAlert">Select image from:</string>
+    <string name="progressTitleUpload">Processing</string>
+    <string name="progressMsgUpload">Image is changing, please wait…</string>
+    <string name="cancellationMsg">Canceled by user</string>
+    <string name="deniedPermission">Permission denied</string>
+    <string name="imageUpdated">Image Updated</string>
+    <string name="logoutMsg">Logout Successfully</string>
+    <string name="copyKey">Copied to clipboard</string>
+
     <!--  LiveVideoPlayer -->
     <string name="rewindDescription">Rewind button</string>
     <string name="playDescription">Play button</string>
@@ -75,7 +104,8 @@
     <string name="storage_permission_denied">Permission to access storage was denied</string>
     <string name="error_no_decoder">This device does not provide a decoder for <xliff:g id="mime_type">%1$s</xliff:g></string>
     <string name="error_no_secure_decoder">This device does not provide a secure decoder for <xliff:g id="mime_type">%1$s</xliff:g></string>
-    <string name="error_querying_decoders">Unable to query device decoders</string><string name="error_instantiating_decoder">Unable to instantiate decoder <xliff:g id="decoder_name">%1$s</xliff:g></string>
+    <string name="error_querying_decoders">Unable to query device decoders</string>
+    <string name="error_instantiating_decoder">Unable to instantiate decoder <xliff:g id="decoder_name">%1$s</xliff:g></string>
     <string name="error_unsupported_video">Media includes video tracks, but none are playable by this device</string>
     <string name="error_unsupported_audio">Media includes audio tracks, but none are playable by this device</string>
     <string name="error_generic">Playback failed</string>
@@ -84,6 +114,7 @@
     <string name="settingsButton">Settings Button</string>
     <string name="switchCameraButton">Switch camera</string>
     <string name="toggleMicButton">Toggle Mute Mic Button</string>
+    <string name="chatButton">Show the chat</string>
 
     <string name="stream_name"> -- </string>
     <string name="start_broadcasting">Start stream</string>
@@ -97,4 +128,10 @@
     <string name="oopps_shouldnt_happen">Oopps this shouldn\'t be happened. Please let the library developer this status</string>
 
     <string name="logout">Logout</string>
+
+    <!--  Chat Fragment  -->
+    <string name="messageHint">Type something…</string>
+    <string name="sendButtonDescription">This button sends your message</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -3,6 +3,7 @@ package com.analysisgroup.streamingapp.MainFragments;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,19 +19,24 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
+    DatabaseReference DATABASE_USERS;
     RecyclerView recyclerView;
     LiveStreamAdapter adapter;
-    private static final String URL_JSON = "http://20.124.2.54:5080/LiveApp/rest/v2/broadcasts/list/0/10";
+    private static final String URL_JSON = "http://20.25.25.216:5080/LiveApp/rest/v2/broadcasts/list/0/10";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,32 +46,9 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        extractLiveStreams(Volley.newRequestQueue(getContext()));
-        /*List<LiveStream> liveStreams = new ArrayList<>();
-        LiveStream stream = new LiveStream();
-        stream.setStatus("created");
-        stream.setName("Jugando chill Minecraft");
-        stream.setUsername("Joshgamer777");
-        stream.setHlsViewerCount(1500);
-        liveStreams.add(stream);
+        DATABASE_USERS = FirebaseDatabase.getInstance().getReference("DATABASE USERS");
 
-        LiveStream stream2 = new LiveStream();
-        stream2.setStatus("created");
-        stream2.setName("Venta de ropa");
-        stream2.setUsername("Juan");
-        stream2.setHlsViewerCount(3500);
-        liveStreams.add(stream2);
-
-        LiveStream stream3 = new LiveStream();
-        stream3.setStatus("created");
-        stream3.setName("Si te ries memeperdonas");
-        stream3.setUsername("Vicio One More Time");
-        stream3.setHlsViewerCount(10000);
-        liveStreams.add(stream3);
-
-        adapter = new LiveStreamAdapter(getContext(),liveStreams);
-        adapter.notifyDataSetChanged();
-        recyclerView.setAdapter(adapter);*/
+        extractLiveStreams(Volley.newRequestQueue(requireContext()));
 
         return view;
     }
@@ -86,6 +69,22 @@ public class HomeFragment extends Fragment {
                     liveStream.setDescription(jsonObject.getString("description"));
                     liveStream.setStreamId(jsonObject.getString("streamId"));
                     liveStream.setStreamUrl(jsonObject.getString("streamUrl"));
+
+                    DATABASE_USERS.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot user : snapshot.getChildren()) {
+                                String key = ""+user.child("SecretKey").getValue();
+                                if (key.equals(liveStream.getStreamId()))
+                                    liveStream.setImage(""+user.child("Image").getValue());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
 
                     if (liveStream.getStatus().equals("broadcasting"))
                         liveStreamList.add(liveStream);
